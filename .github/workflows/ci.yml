@@ -25,6 +25,9 @@ jobs:
     environment: manual_approval
     name: Manual
     runs-on: ubuntu-latest
+    concurrency:
+      group: concurrency-ci
+      cancel-in-progress: true
     steps:
       - name: Run python
         run: |
@@ -37,9 +40,6 @@ jobs:
     needs: approval
     name: finish
     runs-on: ubuntu-latest
-    concurrency:
-      group: concurrency-ci
-      cancel-in-progress: true
     steps:
       - name: Run python
         run: |
