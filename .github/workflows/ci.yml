@@ -11,10 +11,10 @@ jobs:
     steps:
       - name: Run python
         run: |
+          print("::group::System")
           import sys
           import os
           import time
-          print("::group::System")
           print(sys.version)
           print(os.environ['PATH'])
           print("::endgroup::")
