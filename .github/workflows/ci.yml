@@ -9,9 +9,6 @@ on:
     branches:
       - 'releases/**'
 
-concurrency:
-  group: concurrency-ci
-
 jobs:
   start:
     name: Start
@@ -29,6 +26,8 @@ jobs:
         shell: python
 
   approval:
+    concurrency:
+      group: concurrency-ci
     needs: start
     environment: manual_approval
     name: Manual
