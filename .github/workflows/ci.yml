@@ -9,7 +9,7 @@ on:
     branches:
       - 'releases/**'
 
-concurrency: 
+concurrency:
   group: concurrency-ci
   cancel-in-progress: true
 
@@ -28,11 +28,14 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
-          
+
       - name: Run python
         run: |
           import sys
           import os
+          import time
+
           print(sys.version)
           print(os.environ['PATH'])
+          time.sleep(30)
         shell: python
