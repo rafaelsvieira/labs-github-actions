@@ -6,10 +6,14 @@ on:
     types: [completed]
 
 jobs:
-  deploy:
-    name: Deploy
+  on-success:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - name: Run python
-        run: echo "Deploy"
-        shell: bash
+      - run: echo 'The triggering workflow passed'
+
+  on-failure:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'failure' }}
+    steps:
+      - run: echo 'The triggering workflow failed'

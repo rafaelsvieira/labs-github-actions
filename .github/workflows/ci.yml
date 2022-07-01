@@ -14,10 +14,10 @@ jobs:
           import sys
           import os
           import time
-
+          print("::group::System")
           print(sys.version)
           print(os.environ['PATH'])
-          time.sleep(3)
+          print("::endgroup::")
         shell: python
 
   approval:
@@ -27,7 +27,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run python
-        run: echo "Foi"
+        run: |
+          echo "::group::Result"
+          echo "Approved"
+          echo "::endgroup::"
         shell: bash
 
   finish:
@@ -45,5 +48,5 @@ jobs:
 
           print(sys.version)
           print(os.environ['PATH'])
-          time.sleep(30)
+          time.sleep(3)
         shell: python
