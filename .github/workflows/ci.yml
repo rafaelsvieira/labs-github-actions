@@ -3,11 +3,6 @@ name: CI
 on:
   push:
   workflow_dispatch:
-  workflow_run:
-    workflows: ["Build"]
-    types: [requested]
-    branches:
-      - 'releases/**'
 
 jobs:
   start:
@@ -26,8 +21,6 @@ jobs:
         shell: python
 
   approval:
-    concurrency:
-      group: concurrency-ci
     needs: start
     environment: manual_approval
     name: Manual
@@ -41,6 +34,8 @@ jobs:
     needs: approval
     name: finish
     runs-on: ubuntu-latest
+    concurrency:
+      group: concurrency-ci
     steps:
       - name: Run python
         run: |
