@@ -1,0 +1,12 @@
+name: '1 - workflow dispatch'
+
+on:
+  workflow_dispatch:
+
+jobs:
+  dispatch:
+    name: My job with dispatch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger
+        run: echo "Workflow dispatch"
