@@ -1,7 +1,12 @@
-name: '1 - workflow dispatch'
+name: '2. workflow dispatch with parameters'
 
 on:
   workflow_dispatch:
+    inputs:
+      text:
+        description: 'Type a word'
+        required: true
+        type: string
 
 jobs:
   dispatch:
@@ -9,4 +14,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Trigger
-        run: echo "Workflow dispatch"
+        run: echo "Workflow dispatch receive ${{ inputs.text }}"
