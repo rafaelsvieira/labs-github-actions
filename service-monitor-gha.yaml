@@ -1,0 +1,45 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app: arc-gha-controler
+    release: prometheus
+  name: arc-gha-controler
+  namespace: metrics
+spec:
+  endpoints:
+  - path: /metrics
+    port: metrics
+    interval: 5s
+    scrapeTimeout: 4s
+  namespaceSelector:
+    matchNames:
+    - arc-system
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: arc-system
+      app.kubernetes.io/name: gha-rs-controller
+      app.kubernetes.io/namespace: arc-system
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app: arc-gha-listener
+    release: prometheus
+  name: arc-gha-listener
+  namespace: metrics
+spec:
+  endpoints:
+  - path: /metrics
+    port: metrics
+    interval: 5s
+    scrapeTimeout: 4s
+  namespaceSelector:
+    matchNames:
+    - arc-system
+  selector:
+    matchLabels:
+      actions.github.com/scale-set-name: k8s-on-demand-medium
+      actions.github.com/scale-set-namespace: arc-runners
+      app.kubernetes.io/component: runner-scale-set-listener

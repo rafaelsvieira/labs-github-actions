@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    actions.github.com/organization: orgrafaelsvieira
+    actions.github.com/scale-set-name: k8s-on-demand-medium
+    actions.github.com/scale-set-namespace: arc-runners
+    app.kubernetes.io/component: runner-scale-set-listener
+    app.kubernetes.io/part-of: gha-runner-scale-set
+    app.kubernetes.io/version: 0.6.1
+  annotations:
+    prometheus.io/port: "metrics"
+    prometheus.io/scrape: "true"
+  name: arc-listener-service
+  namespace: arc-system
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+    name: metrics
+  selector:
+    actions.github.com/scale-set-name: k8s-on-demand-medium
+    actions.github.com/scale-set-namespace: arc-runners
+    app.kubernetes.io/component: runner-scale-set-listener
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    actions.github.com/controller-service-account-name: arc-system-gha-rs-controller
+    actions.github.com/controller-service-account-namespace: arc-system
+    app.kubernetes.io/instance: arc-system
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: gha-rs-controller
+    app.kubernetes.io/namespace: arc-system
+    app.kubernetes.io/part-of: gha-rs-controller
+    app.kubernetes.io/version: 0.6.1
+    helm.sh/chart: gha-rs-controller-0.6.1
+  annotations:
+    prometheus.io/port: "metrics"
+    prometheus.io/scrape: "true"
+  name: arc-gha-service
+  namespace: arc-system
+spec:
+  ports:
+  - port: 8080
+    protocol: TCP
+    targetPort: 8080
+    name: metrics
+  selector:
+    app.kubernetes.io/instance: arc-system
+    app.kubernetes.io/name: gha-rs-controller
+    app.kubernetes.io/namespace: arc-system
+  type: ClusterIP
